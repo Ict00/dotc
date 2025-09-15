@@ -1,0 +1,10 @@
+strategy="c_console"
+
+[main]
+compiler="clang"
+flags="-O3 -D_XOPEN_SOURCE=500 -std=c23 -c"
+ldflags="-O3"
+output="dotc_out"
+includes="includes"
+sources="src:test"
+post_cmd="rm obj/* -r"
