@@ -5,18 +5,16 @@
 #include "dotc/syntax.h"
 #include <stdio.h>
 
-int main() {
-	printf("> "); string_t a = read_line();
-	printf("> "); string_t b = read_line();
-	printf("> "); string_t c = read_line();
-	void** strg = dc_storage(3, &a, &b, &c);
-
-	set3die(4, src(&a), src(&b), src(&c), src(&strg));
-
-	iterable_t t = iterable(strg, 3);
-
-	foreach(i, t) {
-		printf("%s\n", src(i));
+object(human,
+	string_t name;,
+	void say_hello(human* THIS) {
+		printf("Hello, %s!\n", src(&THIS->name));
 	}
-	
+);
+
+int main() {
+	human u = (human){ .name =str("Ict") };
+	say_hello(&u);
+
+	return 0;
 }
