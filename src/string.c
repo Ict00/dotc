@@ -75,6 +75,13 @@ bool dc_startswith(const string_t *str, const string_t *str2) {
 }
 
 string_t dc_insert(string_t *src, string_t *str, int position) {
+	if (position > src->len || position < 0) {
+		return (string_t) {
+			.content = strdup(src->content),
+			.len = src->len
+		};
+	}
+	
 	string_t result = (string_t) { };
 
 	int nl = src->len + str->len;
