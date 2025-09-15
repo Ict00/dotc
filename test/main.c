@@ -1,15 +1,15 @@
+#include "dotc/io/console.h"
 #include "dotc/mem.h"
 #include "dotc/string.h"
 #include <stdio.h>
 
 int main() {
-	string_t a = str("Some");
-	string_t b = str("TEST");
-	string_t ins = dc_insert(&a, &b, 4);
+	printf("> ");
+	string_t a = read_line();
 
-	set3die(3, src(&a), src(&b), src(&ins));
+	set3die(1, src(&a));
 
-	printf("%s\n", src(&ins));
+	printf("%s\n", src(&a));
 	
 	die();	
 }
