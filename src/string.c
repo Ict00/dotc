@@ -42,12 +42,33 @@ string_t dc_strcat(string_t *first, const string_t *second) {
 	return (string_t) {.content = new_content, .len = nl};
 }
 
-
 bool dc_equal(const string_t* first, const string_t* second) {
 	if (first->len != second->len) return false;
 	
 	for (int i = 0; first->content[i] != 0; i++) {
 		if (first->content[i] != second->content[i]) return false;
+	}
+
+	return true;
+}
+
+bool dc_endswith(const string_t *str, const string_t *str2) {
+	int i = str->len-1, b = str2->len-1;
+	
+	for (; i != 0 && b != 0;) {
+		if (str->content[i] != str2->content[b]) return false;
+		i--; b--;
+	}
+
+	return true;
+}
+
+bool dc_startswith(const string_t *str, const string_t *str2) {
+	int i = 0, b = 0;
+
+	for (; i < str->len && b < str2->len;) {
+		if (str->content[i] != str2->content[b]) return false;
+		i++; b++;
 	}
 
 	return true;
