@@ -1,7 +1,7 @@
 #include "dotc/iter.h"
-#include "dotc/mem.h"
 #include <stdarg.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 iterable_t iterable(void** storage, int count) {
 	return (iterable_t) { .storage = storage, .count = count, .current = 0 };
@@ -11,7 +11,7 @@ void** dc_storage(int count, ...) {
 	va_list args;
 	va_start(args, count);
 	
-	void** result = dc_malloc(sizeof(void**)*count);
+	void** result = malloc(sizeof(void**)*count);
 	int c = 0;
 
 	for (int i = 0; i < count; i++) {

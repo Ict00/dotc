@@ -1,11 +1,11 @@
 #include "dotc/string.h"
-#include "dotc/mem.h"
 #include <string.h>
+#include <stdlib.h>
 
 string_t str(const char *source) {
 	int ln = strlen(source);
 	string_t result = (string_t){.len = ln};
-	char* new_content = dc_malloc(sizeof(char)*(ln+1));
+	char* new_content = malloc(sizeof(char)*(ln+1));
 	int i = 0;
 
 	for (; i < ln; i++) {
@@ -28,7 +28,7 @@ int dc_strlen(const string_t *str) {
 
 string_t dc_strcat(string_t *first, const string_t *second) {
 	int nl = first->len + second->len;
-	char* new_content = dc_malloc(sizeof(char) * (nl+1));
+	char* new_content = malloc(sizeof(char) * (nl+1));
 
 	strcpy(new_content, first->content);
 	int b = 0;
@@ -89,7 +89,7 @@ string_t dc_insert(string_t *src, string_t *str, int position) {
 	string_t result = (string_t) { };
 
 	int nl = src->len + str->len;
-	char* new_content = dc_malloc(sizeof(char) * (nl + 1));
+	char* new_content = malloc(sizeof(char) * (nl + 1));
 	
 	int i = 0;
 	int b = 0;
