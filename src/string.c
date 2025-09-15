@@ -73,3 +73,31 @@ bool dc_startswith(const string_t *str, const string_t *str2) {
 
 	return true;
 }
+
+string_t dc_insert(string_t *src, string_t *str, int position) {
+	string_t result = (string_t) { };
+
+	int nl = src->len + str->len;
+	char* new_content = dc_malloc(sizeof(char) * (nl + 1));
+	
+	int i = 0;
+	int b = 0;
+
+	for (; i <= src->len; i++) {
+		if (position == i) {
+			for (int t = 0; t <= str->len; t++) {
+				new_content[b] = str->content[t];
+				b++;
+			}
+		}
+
+		new_content[b] = src->content[i];
+		b++;
+	}
+	new_content[b] = 0;
+
+	result.len = nl;
+	result.content = new_content;
+
+	return result;
+}

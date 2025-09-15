@@ -4,12 +4,12 @@
 
 int main() {
 	string_t a = str("Some");
-	string_t b = str("Some");
-	string_t c = dc_strcat(&a, &b);
+	string_t b = str("TEST");
+	string_t ins = dc_insert(&a, &b, 4);
 
-	set3die(3, src(&a), src(&b), src(&c));
+	set3die(3, src(&a), src(&b), src(&ins));
 
-	printf("%d\n", dc_equal(&a, &b));
+	printf("%s\n", src(&ins));
 	
 	die();	
 }

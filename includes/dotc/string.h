@@ -27,3 +27,6 @@ bool dc_endswith(const string_t* str, const string_t* str2);
 
 
 bool dc_startswith(const string_t* str, const string_t* str2);
+
+
+string_t dc_insert(string_t* src, string_t* str, int position);
