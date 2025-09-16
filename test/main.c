@@ -11,12 +11,12 @@ int main() {
 		printf("> "); string_t b = read_line();
 		printf("> "); string_t c = read_line();
 		
-		void** strg = dc_storage(3, &a, &b, &c);
-		
 		// Free those after exiting the scope
-		kaddv(&ctx, 4, src(&a), src(&b), src(&c), strg);
+		kaddv2(&ctx, src(&a), src(&b), src(&c), NULL);
 		
-		iterable_t t = iterable(strg, 3);
+		iterable_t t = iterable2(&a, &b, &c, NULL);
+
+		kadd(&ctx, t.storage); // Free this too
 
 		foreach (i, t) {
 			printf("%s\n", src(i));

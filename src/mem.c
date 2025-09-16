@@ -5,8 +5,8 @@
 
 void kadd(context_t *THIS, void *ptr) {
 	int current = THIS->count;
-
-	THIS->ptrs = realloc(THIS->ptrs, sizeof(void*) * (current+1));
+	if (current >= 128)
+		THIS->ptrs = realloc(THIS->ptrs, sizeof(void*) * (current+1));
 	
 	THIS->ptrs[THIS->count] = ptr;
 	THIS->count++;
@@ -19,6 +19,20 @@ void kdone(context_t *THIS) {
 	}
 
 	free(THIS->ptrs);
+}
+
+void kaddv2(context_t *THIS, ...) {
+	va_list args;
+
+	va_start(args, THIS);
+	
+	for(;;) {
+		void* arg = va_arg(args, void*);
+		if (arg == NULL) break;
+		kadd(THIS, arg);
+	}
+
+	va_end(args);
 }
 
 void kaddv(context_t *THIS, int count, ...) {
@@ -35,5 +49,5 @@ void kaddv(context_t *THIS, int count, ...) {
 }
 
 context_t create_mctx() {
-	return (context_t) { .ptrs = malloc(sizeof(void*)*1), .count=0 };
+	return (context_t) { .ptrs = malloc(sizeof(void*)*128), .count=0 };
 }

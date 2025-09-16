@@ -7,6 +7,27 @@ iterable_t iterable(void** storage, int count) {
 	return (iterable_t) { .storage = storage, .count = count, .current = 0 };
 }
 
+iterable_t iterable2(void *param1, ...) {
+	va_list args;
+	va_start(args, param1);
+	int count = 1;
+	void** ptrs = malloc(sizeof(void*)*(count+1));
+	ptrs[0] = param1;
+	
+	for (;;) {
+		void* arg = va_arg(args, void*);
+
+		if (arg == NULL) break;
+		ptrs[count] = arg;
+		count++;
+		ptrs = realloc(ptrs, sizeof(void*)*(count+1));
+	}
+
+	va_end(args);
+
+	return iterable(ptrs, count);
+}
+
 void** dc_storage(int count, ...) {
 	va_list args;
 	va_start(args, count);
