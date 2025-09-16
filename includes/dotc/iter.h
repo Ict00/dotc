@@ -30,3 +30,8 @@ void* next(iterable_t* iter);
  * Returns next element of iterable; If it's the end of list, then resets current to the start
  */
 void* next2(iterable_t* iter);
+
+/*
+ * Resets 'current'
+ */
+void iter_reset(iterable_t* iter);

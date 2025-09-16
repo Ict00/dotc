@@ -67,3 +67,5 @@ void* next2(iterable_t *iter) {
 	
 	return to_ret;
 }
+
+void iter_reset(iterable_t *iter) { iter->current = 0; }
