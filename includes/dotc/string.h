@@ -13,6 +13,12 @@ struct {
 string_t str(const char* source);
 
 /*
+ * Those use realloc!!!!!
+ */
+void dc_strappend(string_t* dest, const string_t* str);
+void dc_cappend(string_t* dest, char c);
+
+/*
  * Equal to str->content
 */
 char* src(const string_t* str);
@@ -43,3 +49,10 @@ bool dc_startswith(const string_t* str, const string_t* str2);
  * Returns new string_t; Don't forget to free string_t->content!!
 */
 string_t dc_insert(string_t* src, string_t* str, int position);
+
+/*
+ * Returns total count of strings
+ * NOTE: if dest is a pointer to pointer which is NULL, then it'll be malloc'd; if not - realloc'd;
+ * EACH STRING SHOULD BE FREE'D; IT'S MALLOC'D, TOO!
+ */
+int dc_split(const string_t* src, string_t** dest, char separator);

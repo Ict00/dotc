@@ -12,6 +12,20 @@ string_t str(const char *source) {
 	return result;
 }
 
+void dc_strappend(string_t *dest, const string_t *str) {
+	int nl = dest->len + str->len;
+	dest->content = realloc(dest->content, nl+1);
+	strcpy((dest->content)+dest->len, str->content);
+	dest->len = nl;
+}
+
+void dc_cappend(string_t *dest, char c) {
+	dest->content = realloc(dest->content, dest->len+2);
+	dest->content[dest->len] = c;
+	dest->content[dest->len+1] = 0;
+	dest->len = dest->len + 1;
+}
+
 char* src(const string_t* str) {
 	return str->content;
 }
@@ -105,4 +119,31 @@ string_t dc_insert(string_t *src, string_t *str, int position) {
 	result.content = new_content;
 
 	return result;
+}
+
+int dc_split(const string_t *src, string_t **dest, char separator) {
+	int current = 0;
+	size_t last_size = 32;
+
+	if ((*dest) == NULL)
+		(*dest) = malloc(sizeof(string_t)*last_size);
+	(*dest) = realloc((*dest), sizeof(string_t)*last_size);
+	
+	for (int i = 0; src->content[i] != 0; i++) {
+		if (src->content[i] == separator) {
+			if (current >= last_size) {
+				last_size *= 2;
+				(*dest) = realloc((*dest), sizeof(string_t)*last_size);
+			}
+			
+			current++;
+			continue;
+		}
+
+		dc_cappend(&((*dest)[current]), src->content[i]);
+	}
+	current++;
+	
+
+	return current;
 }

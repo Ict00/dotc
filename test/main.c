@@ -1,5 +1,3 @@
-#include "dotc/io/console.h"
-#include "dotc/iter.h"
 #include "dotc/string.h"
 #include "dotc/syntax.h"
 #include "dotc/mem.h"
@@ -7,16 +5,19 @@
 
 int main() {
 	scope(ctx, {
-		int a = 0; int b = 1; int c = 2;
+		string_t a = str("Wow it:actually works");
+	
+		string_t* b = NULL;
+
+		int count = dc_split(&a, &b, ':');
+
+		// Free all of those after exiting 'scope'
 		
-		iterable_t t = iterable2(&a, &b, &c, NULL);
+		kaddv2(&ctx, b[0].content, b[1].content, b[2].content, b, NULL);
 
-		kadd(&ctx, t.storage); // Free this
-
-		foreach (i, t) {
-			printf("%d\n", *(int*)i);
+		range(i, 0, count) {
+			printf("%d -- %s\n", b[i].len, b[i].content);
 		}
-
 	});
 
 	return 0;
