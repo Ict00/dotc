@@ -7,19 +7,14 @@
 
 int main() {
 	scope(ctx, {
-		printf("> "); string_t a = read_line();
-		printf("> "); string_t b = read_line();
-		printf("> "); string_t c = read_line();
-		
-		// Free those after exiting the scope
-		kaddv2(&ctx, src(&a), src(&b), src(&c), NULL);
+		int a = 0; int b = 1; int c = 2;
 		
 		iterable_t t = iterable2(&a, &b, &c, NULL);
 
-		kadd(&ctx, t.storage); // Free this too
+		kadd(&ctx, t.storage); // Free this
 
 		foreach (i, t) {
-			printf("%s\n", src(i));
+			printf("%d\n", *(int*)i);
 		}
 
 	});

@@ -5,14 +5,8 @@
 string_t str(const char *source) {
 	int ln = strlen(source);
 	string_t result = (string_t){.len = ln};
-	char* new_content = malloc(sizeof(char)*(ln+1));
-	int i = 0;
+	char* new_content = strdup(source);
 
-	for (; i < ln; i++) {
-		new_content[i] = source[i];
-	}
-
-	new_content[i] = 0;
 	result.content = new_content;
 
 	return result;
@@ -26,7 +20,7 @@ int dc_strlen(const string_t *str) {
 	return str->len;
 }
 
-string_t dc_strcat(string_t *first, const string_t *second) {
+string_t dc_strcat(const string_t *first, const string_t *second) {
 	int nl = first->len + second->len;
 	char* new_content = malloc(sizeof(char) * (nl+1));
 
