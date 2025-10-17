@@ -1,4 +1,5 @@
 #include "dotc/iter.h"
+#include "dotc/syntax.h"
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,7 +14,7 @@ iterable_t iterable2(void *param1, ...) {
 	int count = 1;
 	void** ptrs = malloc(sizeof(void*)*(count+1));
 	ptrs[0] = param1;
-	
+
 	for (;;) {
 		void* arg = va_arg(args, void*);
 
@@ -31,7 +32,7 @@ iterable_t iterable2(void *param1, ...) {
 void** dc_storage(int count, ...) {
 	va_list args;
 	va_start(args, count);
-	
+
 	void** result = malloc(sizeof(void**)*count);
 	int c = 0;
 
@@ -53,7 +54,7 @@ void* next(iterable_t *iter) {
 
 	if (iter->current < iter->count)
 		iter->current++;
-	
+
 	return to_ret;
 }
 
@@ -64,8 +65,20 @@ void* next2(iterable_t *iter) {
 		iter->current++;
 	else
 		iter->current = 0;
-	
+
 	return to_ret;
 }
 
 void iter_reset(iterable_t *iter) { iter->current = 0; }
+
+void kaddc(context_t *ctx, iterable_t *iter) {
+	foreach(item, (*iter)) {
+		kadd(ctx, item);
+	} iter_reset(iter);
+}
+
+void kaddc2(context_t *ctx, iterable_t *iter, cleanfn_t fn) {
+	foreach(item, (*iter)) {
+		fn(ctx, item);
+	} iter_reset(iter);
+}

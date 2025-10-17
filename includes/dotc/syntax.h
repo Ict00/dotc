@@ -14,6 +14,7 @@
 #define object(name, stdef, ...)\
 	struct { stdef } typedef name; \
 	__VA_ARGS__
+
 /*
  * Usage of fndef(...) macro:
  * fndef(NAME_OF_FUNCTION_TYPE, RETURN TYPE, PARAM1, PARAM2..., PARAM_N);
@@ -32,10 +33,9 @@
  *
  *	...
  * });
- * 
+ *
  * After exiting scope, some_ptr will be free'd
  */
-
 #define scope(x, y) context_t x = create_mctx(); y; kdone(&x);
 
 /*
@@ -47,9 +47,9 @@
  * foreach(element, list) {
  *	printf("%d\n", *(int*)element);
  * }
- * 
+ *
  * free(list.storage);
  */
-
-
 #define foreach(el, iterable_list) for (void* el = next(&(iterable_list)); el != NULL; el = next(&(iterable_list)))
+
+#define cast(what, type) ((type)(what))

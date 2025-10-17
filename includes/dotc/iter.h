@@ -1,11 +1,16 @@
 #pragma once
 
+#include "dotc/mem.h"
+#include "dotc/syntax.h"
 struct {
 	int count, current;
 	void** storage;
 } typedef iterable_t;
 
+fndef(cleanfn_t, void, context_t*, void*);
+
 iterable_t iterable(void** storage, int count);
+
 /* 
  * Returns new iterable; Example of usage:
  * iterable2(&a, &b, &c, NULL);
@@ -35,3 +40,14 @@ void* next2(iterable_t* iter);
  * Resets 'current'
  */
 void iter_reset(iterable_t* iter);
+
+/*
+ * Add iterable's elements to clean list of context
+ */
+void kaddc(context_t* ctx, iterable_t* iter);
+
+/*
+ * Add iterable's elements to clean list of context
+ * using custom function
+ */
+void kaddc2(context_t* ctx, iterable_t* iter, cleanfn_t fn);

@@ -1,4 +1,6 @@
 #include "dotc/string.h"
+#include "dotc/iter.h"
+#include "dotc/syntax.h"
 #include <string.h>
 #include <stdlib.h>
 
@@ -28,6 +30,10 @@ void dc_cappend(string_t *dest, char c) {
 
 char* src(const string_t* str) {
 	return str->content;
+}
+
+char* src2(string_t str) {
+	return str.content;
 }
 
 int dc_strlen(const string_t *str) {
@@ -128,7 +134,8 @@ int dc_split(const string_t *src, string_t **dest, char separator) {
 	if ((*dest) == NULL)
 		(*dest) = malloc(sizeof(string_t)*last_size);
 	(*dest) = realloc((*dest), sizeof(string_t)*last_size);
-	
+	(*dest)[0] = (string_t){0};
+
 	for (int i = 0; src->content[i] != 0; i++) {
 		if (src->content[i] == separator) {
 			if (current >= last_size) {
@@ -137,6 +144,7 @@ int dc_split(const string_t *src, string_t **dest, char separator) {
 			}
 			
 			current++;
+			(*dest)[current] = (string_t){0};
 			continue;
 		}
 
@@ -146,4 +154,17 @@ int dc_split(const string_t *src, string_t **dest, char separator) {
 	
 
 	return current;
+}
+
+iterable_t dc_split_iter(const string_t *src, char separator) {
+	string_t* dest;
+	int count = dc_split(src, &dest, separator);
+	void** strg = dc_storage(count);
+	
+	range(i, 0, count) {
+		strg[i] = &(dest[i]);
+	}
+	iterable_t it = iterable(strg, count);
+	
+	return it;
 }

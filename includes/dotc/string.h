@@ -1,5 +1,6 @@
 #pragma once
 
+#include "dotc/iter.h"
 #include <stdbool.h>
 
 struct {
@@ -22,6 +23,7 @@ void dc_cappend(string_t* dest, char c);
  * Equal to str->content
 */
 char* src(const string_t* str);
+char* src2(string_t str);
 
 /*
  * Equal to str->len
@@ -56,3 +58,9 @@ string_t dc_insert(string_t* src, string_t* str, int position);
  * EACH STRING SHOULD BE FREE'D; IT'S MALLOC'D, TOO!
  */
 int dc_split(const string_t* src, string_t** dest, char separator);
+
+
+/*
+ * Invokes dc_split and wraps it in iterable.
+ */
+iterable_t dc_split_iter(const string_t* src, char separator);
