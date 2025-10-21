@@ -13,6 +13,7 @@ object(context_t,
 	 * use scope(ctx, { ... })
 	 */
 
+	void* kaddpass(context_t* THIS, void* ptr);
 	void kadd(context_t* THIS, void* ptr);
 	void kaddv(context_t* THIS, int count, ...);
 	void kaddv2(context_t* THIS, ...);

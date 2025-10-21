@@ -23,7 +23,7 @@ int main() {
 		} iter_reset(&iter);
 
 
-		printf("CONTENT:\n%s\n", src2(read_file("Project")));
+		printf("CONTENT:\n%s\n", (char*)kaddpass(&ctx, src2(read_file("Project"))));
 	});
 
 	return 0;

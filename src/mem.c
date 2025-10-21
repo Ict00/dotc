@@ -3,6 +3,17 @@
 #include <stdarg.h>
 #include <stdlib.h>
 
+void* kaddpass(context_t *THIS, void *ptr) {
+	int current = THIS->count;
+	if (current >= 128)
+		THIS->ptrs = realloc(THIS->ptrs, sizeof(void*) * (current+1));
+	
+	THIS->ptrs[THIS->count] = ptr;
+	THIS->count++;
+	
+	return ptr;
+}
+
 void kadd(context_t *THIS, void *ptr) {
 	int current = THIS->count;
 	if (current >= 128)
